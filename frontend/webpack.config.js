@@ -1,6 +1,5 @@
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const Copy = require('copy-webpack-plugin');
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: './src/index.jsx',
@@ -10,26 +9,22 @@ module.exports = {
     },
     devServer: {
         port: 8080,
-        contentBase: './public'
+        contentBase: './public',
     },
     resolve: {
-        extensions: ['','.js', '.jsx'],
+        extensions: ['', '.js', '.jsx'],
         alias: {
             modules: __dirname + '/node_modules'
         }
     },
-    plugins: [
-        new Copy([
-            { from: 'node_modules/font-awesome/fonts', to: 'fonts' },
-            { from: 'node_modules/font-awesome/css/font-awesome.min.css' },
-          ]),
-        new ExtractTextPlugin('style.css')
+    plugins: [ 
+        new ExtractTextPlugin('app.css')
     ],
     module: {
         loaders: [{
             test: /.js[x]?$/,
             loader: 'babel-loader',
-            exclude: 'node_modules',
+            exclude: /node_modules/,
             query: {
                 presets: ['es2015', 'react'],
                 plugins: ['transform-object-rest-spread']
@@ -38,7 +33,7 @@ module.exports = {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
         }, {
-            test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+            test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
             loader: 'file'
         }]
     }
